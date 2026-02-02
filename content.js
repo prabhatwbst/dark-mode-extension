@@ -7,7 +7,7 @@ function enableDarkMode() {
   style.id = DARK_STYLE_ID;
   style.innerHTML = `
     html {
-      background-color: #121212 !important;
+      background-color: #1e1e1e !important;
       color: #e0e0e0 !important;
     }
 
