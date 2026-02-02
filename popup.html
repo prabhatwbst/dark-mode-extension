@@ -5,18 +5,154 @@
     body {
       background: #1e1e1e;
       color: #fff;
-      width: 200px;
-      padding: 10px;
-      font-family: Arial;
+      width: 320px;
+      padding: 15px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    button {
+
+    h2 { margin: 0 0 15px 0; font-size: 16px; font-weight: 600; }
+    h3 { margin: 20px 0 10px 0; font-size: 13px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Theme Grid */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .theme-card {
+      background: #2d2d2d;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .theme-card:hover { background: #333; }
+    .theme-card.active { border-color: #8ab4f8; background: #333; }
+
+    .preview-box {
       width: 100%;
-      padding: 10px;
+      height: 40px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      position: relative;
     }
+    
+    /* Simulate UI lines in preview */
+    .preview-line { height: 4px; border-radius: 2px; margin-bottom: 4px; opacity: 0.6; }
+    .preview-line.short { width: 40%; }
+    .preview-line.long { width: 80%; }
+
+    .theme-name { font-size: 12px; font-weight: 500; }
+
+    /* Custom Controls */
+    .color-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      background: #2d2d2d;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    
+    .color-label { font-size: 13px; }
+    
+    input[type="color"] {
+      -webkit-appearance: none;
+      appearance: none;
+      border: none;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      background: none;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border: 1px solid #444; border-radius: 50%; }
+
+    /* Toggle Button */
+    #toggle {
+      width: 100%;
+      padding: 12px;
+      background: #8ab4f8;
+      color: #121212;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    #toggle:hover { opacity: 0.9; }
+
+    /* Palette Swatches */
+    .palette-row { display: flex; gap: 8px; margin-top: 5px; }
+    .swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1px solid #444;
+    }
+    .swatch:hover { transform: scale(1.1); }
   </style>
 </head>
 <body>
   <button id="toggle">Toggle Dark Mode</button>
+
+  <h2>Select Theme</h2>
+  <div class="theme-grid">
+    <!-- Classic -->
+    <div class="theme-card" data-req-theme="classic">
+      <div class="preview-box" style="background: #1e1e1e;">
+        <div class="preview-line short" style="background: #e0e0e0;"></div>
+        <div class="preview-line long" style="background: #e0e0e0;"></div>
+      </div>
+      <div class="theme-name">Classic</div>
+    </div>
+
+    <!-- Midnight -->
+    <div class="theme-card" data-req-theme="midnight">
+      <div class="preview-box" style="background: #0f172a;">
+        <div class="preview-line short" style="background: #cbd5e1;"></div>
+        <div class="preview-line long" style="background: #cbd5e1;"></div>
+      </div>
+      <div class="theme-name">Midnight</div>
+    </div>
+
+    <!-- OLED -->
+    <div class="theme-card" data-req-theme="oled">
+      <div class="preview-box" style="background: #000000;">
+        <div class="preview-line short" style="background: #ffffff;"></div>
+        <div class="preview-line long" style="background: #ffffff;"></div>
+      </div>
+      <div class="theme-name">OLED</div>
+    </div>
+  </div>
+
+  <h3>Customize Colors</h3>
+  
+  <div class="color-row">
+    <span class="color-label">Background</span>
+    <input type="color" id="picker-bg">
+  </div>
+  <div class="palette-row" id="bg-palette">
+    <!-- Swatches injected by JS or static? Static for now -->
+    <div class="swatch" style="background: #1e1e1e" data-color="#1e1e1e"></div>
+    <div class="swatch" style="background: #000000" data-color="#000000"></div>
+    <div class="swatch" style="background: #2b2b2b" data-color="#2b2b2b"></div>
+    <div class="swatch" style="background: #3e2723" data-color="#3e2723"></div> <!-- Brown -->
+    <div class="swatch" style="background: #1a237e" data-color="#1a237e"></div> <!-- Blue -->
+  </div>
+
+  <div class="color-row" style="margin-top: 15px;">
+    <span class="color-label">Text Color</span>
+    <input type="color" id="picker-text">
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>

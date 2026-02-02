@@ -1,25 +1,26 @@
 const DARK_STYLE_ID = "forced-dark-mode";
+const CUSTOM_STYLE_ID = "custom-dark-mode";
 
-function enableDarkMode() {
-  if (document.getElementById(DARK_STYLE_ID)) return;
+function enableDarkMode(bg = "#1e1e1e", text = "#e0e0e0") {
+  let style = document.getElementById(DARK_STYLE_ID);
+  
+  if (!style) {
+    style = document.createElement("style");
+    style.id = DARK_STYLE_ID;
+    document.head.appendChild(style);
+  }
 
-  const style = document.createElement("style");
-  style.id = DARK_STYLE_ID;
   style.innerHTML = `
     html {
-      background-color: #1e1e1e !important;
-      color: #e0e0e0 !important;
+      background-color: ${bg} !important;
+      color: ${text} !important;
     }
-
     * {
       background-color: transparent !important;
       border-color: #333 !important;
     }
-
     a { color: #8ab4f8 !important; }
   `;
-
-  document.head.appendChild(style);
 }
 
 function disableDarkMode() {
@@ -27,10 +28,13 @@ function disableDarkMode() {
 }
 
 chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.enabled) {
-    enableDarkMode();
-  } else {
-    disableDarkMode();
+  if (msg.type === "TOGGLE_DARK_MODE" || msg.type === "UPDATE_SETTINGS") {
+    if (msg.enabled) {
+      // Receive bg/text directly from popup
+      enableDarkMode(msg.bg, msg.text);
+    } else {
+      disableDarkMode();
+    }
   }
 });
 
